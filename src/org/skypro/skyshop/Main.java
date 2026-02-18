@@ -1,29 +1,30 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class Main {
     public static void main(String[] args) {
 
-        //Создадим продукты
-        Product umbrella = new Product("Зонт", 1500);
-        Product tshirt = new Product("Футболка", 1500);
-        Product trousers = new Product("Брюки", 2500);
-        Product socks = new Product("Носки", 500);
-        Product tie = new Product("Галстук", 700);
-        Product mur = new Product("Неизвестен", 2000);
+        //Создадим несколько специальных товаров вводим константу
+        DiscountedProduct gump = new DiscountedProduct("Большой зонт", 1500, 15);
+        DiscountedProduct grill = new DiscountedProduct("Гриль", 4500, 25);
+        FixPriceProduct matches = new FixPriceProduct("Спички");
+        SimpleProduct umbrella = new SimpleProduct("Зонт", 1500);
+        SimpleProduct socks = new SimpleProduct("Носки", 500);
+        SimpleProduct mur = new SimpleProduct("Неизвестен", 2000);
 
         //Добавим продукты в корзину
+        ProductBasket.productAdd(gump);
+        ProductBasket.productAdd(grill);
+        ProductBasket.productAdd(matches);
         ProductBasket.productAdd(umbrella);
-        ProductBasket.productAdd(tshirt);
-        ProductBasket.productAdd(trousers);
-        ProductBasket.productAdd(tie);
         ProductBasket.productAdd(socks);
 
         //Выведем содержимое корзины
         ProductBasket.basketList();
-
 
         //Добавим товар в полную корзину
         System.out.println("\nДобавим продукт в полную корзину");
@@ -31,7 +32,7 @@ public class Main {
 
         //Найдём в корзине элемент по имени, он есть в корзине
         System.out.println("\nИщем товар, который есть в корзине:");
-        ProductBasket.productCheck(umbrella);
+        ProductBasket.productCheck(grill);
 
         //Найдём в корзине элемент по имени, его там нет
         System.out.println("\nИщем товар, которого нет в корзине");
