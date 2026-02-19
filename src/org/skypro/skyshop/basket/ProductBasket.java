@@ -1,10 +1,11 @@
 package org.skypro.skyshop.basket;
 
+import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.ArrayList;
 
-import java.util.Arrays;
 import java.util.List;
 
 //Создадим класс ProductBasket
@@ -37,6 +38,7 @@ public class ProductBasket {
         if (basket != null) {
             System.out.print(basket);
             System.out.println("Итого: " + basketPrice());
+            System.out.println("Специальных товаров в корзине: " + findSpecial());
         } else {
             System.out.println("В корзине пусто!");
         }
@@ -56,9 +58,21 @@ public class ProductBasket {
 
     //Очистим корзину
     public static void clearBasket() {
-        Product product = new Product(null, 0);
+        Product product = new SimpleProduct(null, 0);
         for (int i = 0; i < basket.size(); i++) {
             basket.set(i, product);
         }
     }
+
+    //Находим количество специальных товаров
+    public static int findSpecial() {
+        int special = 0;
+        for (Product product : basket) {
+            if (product.isSpecial()) {
+                special += 1;
+            }
+        }
+        return special;
+    }
+
 }
