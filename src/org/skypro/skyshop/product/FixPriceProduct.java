@@ -22,4 +22,22 @@ public class FixPriceProduct extends Product {
     public String toString() {
         return "Продукт - " + productName + ", на данный продукт цена фиксированная - " + getProductPrice() + ".\n";
     }
+
+    @Override
+    public String searchTerm() {
+
+        return null;
+    }
+
+    @Override
+    public String contentType() {
+
+        return null;
+    }
+
+    @Override
+    public String getStringRepresentation() {
+
+        return null;
+    }
 }

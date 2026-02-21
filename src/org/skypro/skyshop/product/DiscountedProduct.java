@@ -24,4 +24,22 @@ public class DiscountedProduct extends Product {
     public String toString() {
         return "Продукт (есть скидка) - " + productName + ", цена со скидкой - " + getProductPrice() + " (скидка " + discount + " %).\n";
     }
+
+    @Override
+    public String searchTerm() {
+
+        return null;
+    }
+
+    @Override
+    public String contentType() {
+
+        return null;
+    }
+
+    @Override
+    public String getStringRepresentation() {
+
+        return null;
+    }
 }

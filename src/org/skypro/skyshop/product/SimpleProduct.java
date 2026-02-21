@@ -7,7 +7,7 @@ public class SimpleProduct extends Product {
         super(productName);
         this.productPrice = productPrice;
     }
-    
+
     @Override
     public int getProductPrice() {
         return productPrice;
@@ -21,5 +21,22 @@ public class SimpleProduct extends Product {
     @Override
     public String toString() {
         return "Продукт - " + productName + ", цена - " + productPrice + ".\n";
+    }
+
+    @Override
+    public String searchTerm() {
+        return productName;
+    }
+
+    @Override
+    public String contentType() {
+
+        return null;
+    }
+
+    @Override
+    public String getStringRepresentation() {
+
+        return null;
     }
 }
