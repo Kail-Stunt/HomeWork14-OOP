@@ -1,5 +1,7 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.exeptions.BestResultNotFoundException;
+
 import java.util.Arrays;
 
 public class SearchEngine {
@@ -35,4 +37,27 @@ public class SearchEngine {
         }
     }
 
+    public static void mostSuitable(Searchable searchable, String mostFind) throws BestResultNotFoundException {
+        try {
+            int index = 0;
+            int indexSubString = searchable.searchTerm().indexOf(mostFind, index);
+            int stringFound = 0;
+            if (searchable.searchTerm() != null && mostFind != null) {
+                while (indexSubString != -1) {
+                    stringFound++;
+                    index = indexSubString + mostFind.length();
+                    indexSubString = searchable.searchTerm().indexOf(mostFind, index);
+                }
+            }
+            if (stringFound == 0) {
+                throw new BestResultNotFoundException(mostFind);
+            } else {
+                System.out.println("Количество совпадений для строки \"" + mostFind + "\" в строке \"" + searchable.searchTerm() + "\" составляет " + stringFound + " раз.");
+            }
+        } catch (BestResultNotFoundException e) {
+            System.out.println(e);
+        }
+    }
+
 }
+

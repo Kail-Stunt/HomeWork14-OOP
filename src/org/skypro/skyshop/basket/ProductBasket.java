@@ -58,9 +58,9 @@ public class ProductBasket {
 
     //Очистим корзину
     public static void clearBasket() {
-        Product product = new SimpleProduct(null, 0);
+
         for (int i = 0; i < basket.size(); i++) {
-            basket.set(i, product);
+            basket.clear();
         }
     }
 

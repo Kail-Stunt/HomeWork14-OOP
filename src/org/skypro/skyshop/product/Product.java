@@ -1,10 +1,19 @@
 package org.skypro.skyshop.product;
 
+import java.util.InputMismatchException;
+
 public abstract class Product implements Searchable {
 
     final String productName;
 
-    public Product(String productName) {
+    public Product(String productName) throws InputMismatchException {
+        if ((productName == null) || productName.isBlank()) {
+            try {
+                System.out.println("\nИмя не может быть пустым!");
+            } catch (InputMismatchException e) {
+                throw new RuntimeException(e);
+            }
+        }
         this.productName = productName;
     }
 
@@ -15,6 +24,7 @@ public abstract class Product implements Searchable {
     public abstract int getProductPrice();
 
     public abstract boolean isSpecial();
+
 
     @Override
     public String toString() {

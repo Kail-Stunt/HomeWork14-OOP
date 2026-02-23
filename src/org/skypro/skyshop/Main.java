@@ -3,8 +3,10 @@ package org.skypro.skyshop;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
 
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //Создадим несколько специальных товаров вводим константу
         DiscountedProduct gumpUmbrella = new DiscountedProduct("Большой зонт", 1500, 15);
@@ -46,7 +48,7 @@ public class Main {
         ProductBasket.productCheck(umbrella);
 
         //Реализуем поиск по статьям
-        System.out.println("\nВводим новый функционал - поиск товара и статеё о товаре:\n");
+        System.out.println("\nВводим новый функционал - поиск товара и статей о товаре:\n");
         SearchEngine searchEngine = new SearchEngine(10);
         Article gumpArticle = new Article("Большой зонт", "Большой, закрывающий не только голову, но и плечи зонт.");
         Article grillArticle = new Article("Гриль", "Спициальное устройство для приготовления продуктов на углях или на огне.");
@@ -69,5 +71,24 @@ public class Main {
         searchEngine.search("Большой зонт");
         searchEngine.search("Спички");
         searchEngine.search("Носки");
+
+        //бработка исключений
+        ProductBasket.clearBasket();
+        System.out.println("\nРаботаем с исключениями:");
+        System.out.println("\nДобавим пустой товар с нулевой ценой");
+
+        SimpleProduct nullProduct = new SimpleProduct(null, 0);
+
+        System.out.println("\n\nДобавим пустой товар по скидке с нулевой ценой и отрицательной скидкой:");
+        DiscountedProduct nullDiscountedProduct = new DiscountedProduct("null", 0, -10);
+
+        System.out.println("Найдём слово \"зонт\" в строке \"Зонт, зонт зонтик, зонт Зонтик зонт и зонтик\"");
+        SimpleProduct continuousSearchTrue = new SimpleProduct("Зонт, зонт зонтик, зонт Зонтик зонт и зонтик", 100);
+        SearchEngine.mostSuitable(continuousSearchTrue,"зонт");
+
+        System.out.println("\n\nНайдём слово \"мумука\" в строке \"Зонт, зонт зонтик, зонт Зонтик зонт и зонтик\"");
+        SimpleProduct continuousSearchFalse = new SimpleProduct("Зонт, зонт зонтик, зонт Зонтик зонт и зонтик", 100);
+        SearchEngine.mostSuitable(continuousSearchFalse,"мумука");
+
     }
 }
