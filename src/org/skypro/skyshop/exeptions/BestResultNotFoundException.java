@@ -10,8 +10,8 @@ public class BestResultNotFoundException extends IOException {
         this.mostFound = mostFound;
     }
 
-    @Override
-    public String toString() {
-        return "Для поискового запроса '" + mostFound + "' не нашлось подходящего результата.";
-    }
+//    @Override
+//    public String toString() {
+//        return "Для поискового запроса '" + mostFound + "' не нашлось подходящего результата.";
+//    }
 }

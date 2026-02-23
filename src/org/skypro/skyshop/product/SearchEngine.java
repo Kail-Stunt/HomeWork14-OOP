@@ -37,27 +37,36 @@ public class SearchEngine {
         }
     }
 
-    public static void mostSuitable(Searchable searchable, String mostFind) throws BestResultNotFoundException {
+    public void mostSuitable(String mostFind) throws BestResultNotFoundException {
+
         try {
-            int index = 0;
-            int indexSubString = searchable.searchTerm().indexOf(mostFind, index);
-            int stringFound = 0;
-            if (searchable.searchTerm() != null && mostFind != null) {
-                while (indexSubString != -1) {
-                    stringFound++;
-                    index = indexSubString + mostFind.length();
-                    indexSubString = searchable.searchTerm().indexOf(mostFind, index);
+            int elementAreFound = 0;
+            String element = "";
+            for (Searchable s : searchables) {
+                int index = 0;
+                int stringFound = 0;
+                int indexSubString = s.searchTerm().indexOf(mostFind, index);
+                if (s.searchTerm() != null && mostFind != null) {
+                    while (indexSubString != -1) {
+                        stringFound++;
+                        index = indexSubString + mostFind.length();
+                        indexSubString = s.searchTerm().indexOf(mostFind, index);
+                        elementAreFound = 1;
+                        element = s.searchTerm();
+                    }
                 }
             }
-            if (stringFound == 0) {
+            if (elementAreFound == 0) {
                 throw new BestResultNotFoundException(mostFind);
             } else {
-                System.out.println("Количество совпадений для строки \"" + mostFind + "\" в строке \"" + searchable.searchTerm() + "\" составляет " + stringFound + " раз.");
+                System.out.println("По поисковому запросу \"" + mostFind + "\" найден элемент " + element);
             }
         } catch (BestResultNotFoundException e) {
             System.out.println(e);
         }
+
     }
 
 }
+
 

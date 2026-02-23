@@ -5,15 +5,11 @@ import java.util.InputMismatchException;
 public class SimpleProduct extends Product {
     private int productPrice;
 
-    public SimpleProduct(String productName, int productPrice) throws InputMismatchException {
+    public SimpleProduct(String productName, int productPrice) throws IllegalArgumentException {
         super(productName);
         this.productPrice = productPrice;
         if (productPrice <= 0) {
-            try {
-                System.out.println("Цена товара должна быть больше нуля!");
-            } catch (InputMismatchException e) {
-                throw new RuntimeException(e);
-            }
+                throw new IllegalArgumentException("Цена не может быть меньше нуля!");
         }
     }
 

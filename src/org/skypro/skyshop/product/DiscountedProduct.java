@@ -6,23 +6,15 @@ public class DiscountedProduct extends Product {
     public int basePrice;
     public int discount;
 
-    public DiscountedProduct(String productName, int basePrice, int discount) throws InputMismatchException {
+    public DiscountedProduct(String productName, int basePrice, int discount) throws IllegalArgumentException {
         super(productName);
         this.basePrice = basePrice;
         this.discount = discount;
-        try {
-            if (basePrice <= 0) {
-                System.out.println("\nЦена товара должна быть больше нуля!");
-            }
-        } catch (InputMismatchException e) {
-            throw new RuntimeException(e);
+        if (basePrice <= 0) {
+            throw new IllegalArgumentException("Цена товара должна быть больше нуля!");
         }
-        try {
-            if (discount < 0 || discount > 100) {
-                System.out.println("Скидка на товар должна быть больше нуля и меньше 100!");
-            }
-        } catch (InputMismatchException e) {
-            throw new RuntimeException(e);
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Скидка на товар должна быть больше нуля и меньше 100!");
         }
     }
 
@@ -58,4 +50,5 @@ public class DiscountedProduct extends Product {
 
         return null;
     }
+
 }
