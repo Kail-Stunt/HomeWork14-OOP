@@ -1,11 +1,16 @@
 package org.skypro.skyshop.product;
 
+import java.util.InputMismatchException;
+
 public class SimpleProduct extends Product {
     private int productPrice;
 
-    public SimpleProduct(String productName, int productPrice) {
+    public SimpleProduct(String productName, int productPrice) throws IllegalArgumentException {
         super(productName);
         this.productPrice = productPrice;
+        if (productPrice <= 0) {
+                throw new IllegalArgumentException("Цена не может быть меньше нуля!");
+        }
     }
 
     @Override

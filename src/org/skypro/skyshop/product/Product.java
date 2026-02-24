@@ -1,10 +1,15 @@
 package org.skypro.skyshop.product;
 
+import java.util.InputMismatchException;
+
 public abstract class Product implements Searchable {
 
     final String productName;
 
-    public Product(String productName) {
+    public Product(String productName) throws IllegalArgumentException {
+        if ((productName == null) || productName.isBlank()) {
+                throw new IllegalArgumentException("Название товара не может быть пустым!");
+        }
         this.productName = productName;
     }
 
@@ -15,6 +20,7 @@ public abstract class Product implements Searchable {
     public abstract int getProductPrice();
 
     public abstract boolean isSpecial();
+
 
     @Override
     public String toString() {

@@ -1,10 +1,13 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exeptions.BestResultNotFoundException;
 import org.skypro.skyshop.product.*;
 
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //Создадим несколько специальных товаров вводим константу
         DiscountedProduct gumpUmbrella = new DiscountedProduct("Большой зонт", 1500, 15);
@@ -38,15 +41,15 @@ public class Main {
 
         //Очистим корзину и выведем после этого содержимое корзины
         System.out.println("\nОчистим корзину, заполнив все элементами пустыми значениями");
-        ProductBasket.clearBasket();
-        ProductBasket.basketList();
+//        ProductBasket.clearBasket();
+//        ProductBasket.basketList();
 
         //Найдём в пустой корзине элемент по имени
         System.out.println("\nИщем товар, который был в корзине, при этом корзина пустая:");
         ProductBasket.productCheck(umbrella);
 
         //Реализуем поиск по статьям
-        System.out.println("\nВводим новый функционал - поиск товара и статеё о товаре:\n");
+        System.out.println("\nВводим новый функционал - поиск товара и статей о товаре:\n");
         SearchEngine searchEngine = new SearchEngine(10);
         Article gumpArticle = new Article("Большой зонт", "Большой, закрывающий не только голову, но и плечи зонт.");
         Article grillArticle = new Article("Гриль", "Спициальное устройство для приготовления продуктов на углях или на огне.");
@@ -69,5 +72,56 @@ public class Main {
         searchEngine.search("Большой зонт");
         searchEngine.search("Спички");
         searchEngine.search("Носки");
+
+        //Обработка исключений
+        System.out.println("\nРаботаем с исключениями:");
+        System.out.println("\nДобавим пустой товар");
+        try {
+            SimpleProduct nullNameProduct = new SimpleProduct(null, 0);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nДобавим товар с нулевой ценой");
+        try {
+            SimpleProduct nullPriceProduct = new SimpleProduct("Мышь", 0);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\n\nДобавим пустой товар по скидке с нулевой ценой и отрицательной скидкой:");
+        try {
+            DiscountedProduct nullDiscountedProduct = new DiscountedProduct(null, 0, -10);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nДобавим товар по скидке с нулевой ценой и отрицательной скидкой:");
+        try {
+            DiscountedProduct nullDiscountedProduct = new DiscountedProduct("Маяк", 0, -10);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nДобавим товар по скидке с отрицательной скидкой:");
+        try {
+            DiscountedProduct nullDiscountedProduct = new DiscountedProduct("Маяк", 1000, -10);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nНайдём элемент \"зонт\" в массиве товаров");
+        try {
+            searchEngine.mostSuitable("зонт");
+        } catch (BestResultNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nНайдём элемент \"мумука\" в массиве товаров");
+        try {
+            searchEngine.mostSuitable("мумука");
+        } catch (BestResultNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
