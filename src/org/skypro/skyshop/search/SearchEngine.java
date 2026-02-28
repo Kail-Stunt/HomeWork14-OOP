@@ -1,39 +1,32 @@
-package org.skypro.skyshop.product;
+package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exeptions.BestResultNotFoundException;
+import org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class SearchEngine {
 
-    private Searchable[] searchables;
-    private int size;
-    private int addCount = 0;
+    private static final LinkedList<Searchable> searchables = new LinkedList<>();
 
-    public SearchEngine(int size) {
-        this.searchables = new Searchable[size];
-        this.size = size;
+    public void add(Searchable searchable) {
+        searchables.add(searchable);
     }
 
-    public Searchable[] search(String search) {
-        Searchable[] result = new Searchable[5];
+    public void search(String search) {
+        LinkedList<Searchable> result = new LinkedList<>();
         int count = 0;
         for (Searchable s : searchables) {
             if (s.searchTerm().contains(search)) {
-                result[count++] = s;
+                result.add(s);
+                ++count;
                 if (count == 5) break;
             }
         }
-        System.out.println("Нашли " + count + " элементов из поиска " + Arrays.toString(result));
-        return result;
-    }
-
-    public void add(Searchable searchable) {
-        if (addCount >= searchables.length) {
-            System.out.println("Массив заполнен!");
-        } else {
-            searchables[addCount] = searchable;
-            addCount++;
+        System.out.println("\nНашли " + count + " элементов из поиска:");
+        for (int i = 0; i < count; i++) {
+            System.out.println(result.get(i));
         }
     }
 
