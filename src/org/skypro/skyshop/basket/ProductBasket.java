@@ -1,11 +1,10 @@
 package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.ArrayList;
 
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,33 +71,22 @@ public class ProductBasket {
     }
 
     //Удаляем из корзины указанный товар и возвращаем список удалённых продуктов
-    public static void deleteProduct(String productName) {
-        List<Product> deletedProductsList = new ArrayList<Product>();
-
+    public static List<Product> removeProduct(String productName) {
+        List<Product> removeProductsList = new ArrayList<Product>();
         for (Product product : basket) {
             if (Objects.equals(product.getProductName(), productName)) {
-                deletedProductsList.add(product);
+                removeProductsList.add(product);
             }
         }
-
         //IDE предложила заменить код и итератором на данный оператор! Я с ней согласен:-)
-        basket.removeIf(deletedProductsList::contains);
+        basket.removeIf(removeProductsList::contains);
 
-        //Исходный код с итератором
-//        Iterator<Product> iterator = basket.iterator();
-//        while (iterator.hasNext()) {
-//            Product element = iterator.next();
-//            // Если элемент есть во втором списке, удаляем его
-//            if (deletedProductsList.contains(element)) {
-//                iterator.remove(); // Безопасное удаление [2, 11]
-//            }
-//        }
-
-        if (deletedProductsList.isEmpty()) {
-            System.out.println("Список пуст:\n" + deletedProductsList);
+        if (removeProductsList.isEmpty()) {
+            System.out.println("Список пуст:\n" + removeProductsList);
         } else {
-            System.out.println("Список удалённых продуктов:" + deletedProductsList);
+            System.out.println("Список удалённых продуктов:" + removeProductsList);
         }
+        return removeProductsList;
     }
 }
 

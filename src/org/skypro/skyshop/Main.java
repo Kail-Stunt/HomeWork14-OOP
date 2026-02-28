@@ -1,7 +1,6 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.exeptions.BestResultNotFoundException;
 import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.search.SearchEngine;
 
@@ -115,13 +114,13 @@ public class Main {
 
         //Удалим товары из корзины по имени
         System.out.println("\nУдалим товары из корзины по имени, при условии что товар в корзине есть (удалим зонт):");
-        ProductBasket.deleteProduct(umbrella.getProductName());
+        ProductBasket.removeProduct(umbrella.getProductName());
         ProductBasket.basketList();
-        ProductBasket.deleteProduct(socks.getProductName());
+        ProductBasket.removeProduct(socks.getProductName());
         System.out.println("\nВыведем корзину, из которой удалили товары:");
         ProductBasket.basketList();
         System.out.println("\nУдалим товары из корзины по имени, при условии что товара в корзине нет (удалим Неизвестен):");
-        ProductBasket.deleteProduct(mur.getProductName());
+        ProductBasket.removeProduct(mur.getProductName());
 
     }
 
