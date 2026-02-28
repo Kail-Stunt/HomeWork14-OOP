@@ -1,6 +1,6 @@
 package org.skypro.skyshop.product;
 
-import java.util.InputMismatchException;
+import org.skypro.skyshop.search.Searchable;
 
 public abstract class Product implements Searchable {
 

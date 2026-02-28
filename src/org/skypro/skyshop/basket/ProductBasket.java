@@ -1,25 +1,22 @@
 package org.skypro.skyshop.basket;
 
-import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.ArrayList;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 //Создадим класс ProductBasket
 public class ProductBasket {
-    private static List<Product> basket = new ArrayList<Product>(5);
+    private static final List<Product> basket = new ArrayList<Product>(5);
 
 
     //Реализуем метод добавления продукта в корзину: метод принимает в себя продукт и ничего не возвращает.
     public static void productAdd(Product product) {
-        if (basket.size() < 5) {
-            basket.add(product);
-        } else {
-            System.out.println("Корзина заполнена!");
-        }
+        basket.add(product);
     }
 
     //Реализуем метод получения общей стоимости корзины: метод ничего не принимает и возвращает целое число.
@@ -35,8 +32,10 @@ public class ProductBasket {
     //Выведем содержимое корзины и её полную стоимость
     public static void basketList() {
         System.out.println("Содержимое корзины:");
-        if (basket != null) {
-            System.out.print(basket);
+        for (Product item : basket) {
+            System.out.print(item);
+        }
+        if (!basket.isEmpty()) {
             System.out.println("Итого: " + basketPrice());
             System.out.println("Специальных товаров в корзине: " + findSpecial());
         } else {
@@ -58,10 +57,7 @@ public class ProductBasket {
 
     //Очистим корзину
     public static void clearBasket() {
-
-        for (int i = 0; i < basket.size(); i++) {
-            basket.clear();
-        }
+        basket.clear();
     }
 
     //Находим количество специальных товаров
@@ -75,4 +71,34 @@ public class ProductBasket {
         return special;
     }
 
+    //Удаляем из корзины указанный товар и возвращаем список удалённых продуктов
+    public static void deleteProduct(String productName) {
+        List<Product> deletedProductsList = new ArrayList<Product>();
+
+        for (Product product : basket) {
+            if (Objects.equals(product.getProductName(), productName)) {
+                deletedProductsList.add(product);
+            }
+        }
+
+        //IDE предложила заменить код и итератором на данный оператор! Я с ней согласен:-)
+        basket.removeIf(deletedProductsList::contains);
+
+        //Исходный код с итератором
+//        Iterator<Product> iterator = basket.iterator();
+//        while (iterator.hasNext()) {
+//            Product element = iterator.next();
+//            // Если элемент есть во втором списке, удаляем его
+//            if (deletedProductsList.contains(element)) {
+//                iterator.remove(); // Безопасное удаление [2, 11]
+//            }
+//        }
+
+        if (deletedProductsList.isEmpty()) {
+            System.out.println("Список пуст:\n" + deletedProductsList);
+        } else {
+            System.out.println("Список удалённых продуктов:" + deletedProductsList);
+        }
+    }
 }
+
