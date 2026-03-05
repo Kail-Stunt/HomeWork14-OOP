@@ -2,7 +2,10 @@ package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.search.Searchable;
 
-public final class Article implements Searchable {
+import java.util.Comparator;
+import java.util.Objects;
+
+public final class Article implements Searchable, Comparable<Searchable> {
     private final String articleName;
     private final String articleContent;
 
@@ -27,8 +30,25 @@ public final class Article implements Searchable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return Objects.equals(articleName, article.articleName) && Objects.equals(articleContent, article.articleContent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(articleName, articleContent);
+    }
+
+    @Override
     public String getStringRepresentation() {
         Searchable.super.getStringRepresentation();
         return null;
+    }
+
+    @Override
+    public int compareTo(Searchable o) {
+        return 0;
     }
 }

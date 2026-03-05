@@ -1,6 +1,8 @@
 package org.skypro.skyshop.product;
 
-public class FixPriceProduct extends Product {
+import org.skypro.skyshop.search.Searchable;
+
+public class FixPriceProduct extends Product implements Comparable<Searchable> {
 
     private static final int FIXED_PRICE = 250;
 
@@ -39,5 +41,10 @@ public class FixPriceProduct extends Product {
     public String getStringRepresentation() {
 
         return null;
+    }
+
+    @Override
+    public int compareTo(Searchable o) {
+        return 0;
     }
 }

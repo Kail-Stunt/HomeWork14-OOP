@@ -1,8 +1,10 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.search.Searchable;
+
 import java.util.InputMismatchException;
 
-public class SimpleProduct extends Product {
+public class SimpleProduct extends Product implements Comparable<Searchable> {
     private int productPrice;
 
     public SimpleProduct(String productName, int productPrice) throws IllegalArgumentException {
@@ -43,5 +45,10 @@ public class SimpleProduct extends Product {
     public String getStringRepresentation() {
 
         return null;
+    }
+
+    @Override
+    public int compareTo(Searchable o) {
+        return 0;
     }
 }
