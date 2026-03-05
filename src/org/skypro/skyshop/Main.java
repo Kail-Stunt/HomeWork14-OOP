@@ -5,7 +5,7 @@ import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.search.SearchEngine;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -38,18 +38,17 @@ public class Main {
         ProductBasket.productCheck(mur);
 
         //Найдём в пустой корзине элемент по имени
-//        System.out.println("\nИщем товар, который был в корзине, при этом корзина пустая:");
-//        ProductBasket.clearBasket();
-//        ProductBasket.productCheck(umbrella);
+        System.out.println("\nИщем товар, который был в корзине, при этом корзина пустая:");
+        ProductBasket.clearBasket();
+        ProductBasket.productCheck(umbrella);
 
         //Реализуем поиск по статьям
         System.out.println("\nВводим новый функционал - поиск товара и статей о товаре:\n");
         SearchEngine searchEngine = getSearchEngine();
 
         //Найдём нужную статью
-        searchEngine.search("Большой зонт");
-        searchEngine.search("Спички");
-        searchEngine.search("Носки");
+        ArrayList<String> searchList = new ArrayList<>(Arrays.asList("Большой зонт", "Спички", "Носки","Гриль", "Неизвестно"));
+        searchEngine.search(searchList);
 
 //        Для удобства скроем под комменты работу с исключениями
 //        Обработка исключений
@@ -107,13 +106,15 @@ public class Main {
         System.out.println("\nДобавим продукт в полную корзину. Добавим носки и гриль:");
         ProductBasket.productAdd(socks);
         ProductBasket.productAdd(grill);
+        ProductBasket.productAdd(socks);
+        ProductBasket.productAdd(grill);
         ProductBasket.basketList();
 
         //Удалим товары из корзины по имени
         System.out.println("\nУдалим товары из корзины по имени, при условии что товар в корзине есть (удалим зонт, носки):");
         ProductBasket.removeProduct(umbrella.getProductName());
         ProductBasket.removeProduct(socks.getProductName());
-        //ProductBasket.basketList();
+        ProductBasket.basketList();
         System.out.println("\nВыведем корзину, из которой удалили товары:");
         ProductBasket.basketList();
         System.out.println("\nУдалим товары из корзины по имени, при условии что товара в корзине нет (удалим Неизвестен):");

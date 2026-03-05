@@ -1,31 +1,31 @@
 package org.skypro.skyshop.search;
 
-import org.skypro.skyshop.exeptions.BestResultNotFoundException;
-import org.skypro.skyshop.product.Product;
-
 import java.util.*;
 
 public class SearchEngine {
 
-    private static final ArrayList<Searchable> searchables = new ArrayList<>();
+    private static final Set<Searchable> searchables = new HashSet<>();
 
     public void add(Searchable searchable) {
         searchables.add(searchable);
     }
 
-    public void search(String search) {
-        Map<String, Searchable> result = new TreeMap<>();
+    public void search(ArrayList<String> search) {
+        Comparator<String> lengthAndOrderComparator = Comparator
+                .comparingInt(String::length).reversed()
+                .thenComparing(Comparator.naturalOrder());
+
+        Set<String> result = new TreeSet<>(lengthAndOrderComparator);
         int count = 0;
         for (Searchable s : searchables) {
-            if (s.searchTerm().contains(search)) {
-                result.put(s.searchTerm(), s);
-                ++count;
-                if (count == 5) break;
+            for (String articleName : search) {
+                if (s.searchTerm().contains(articleName)) {
+                    result.add(s.searchTerm());
+                    ++count;
+                }
             }
         }
-        System.out.println("\nНашли " + count + " элементов из поиска:");
-        System.out.println(result.values());
-    }
+        System.out.println("\nНашли " + count + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список: \n" + result);
 
 //    public void mostSuitable(String mostFind) throws BestResultNotFoundException {
 //
@@ -56,6 +56,7 @@ public class SearchEngine {
 //        }
 //
 //    }
+    }
 }
 
 

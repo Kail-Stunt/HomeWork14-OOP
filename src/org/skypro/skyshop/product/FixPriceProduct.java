@@ -1,5 +1,10 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class FixPriceProduct extends Product {
 
     private static final int FIXED_PRICE = 250;
@@ -40,4 +45,9 @@ public class FixPriceProduct extends Product {
 
         return null;
     }
+
+//    @Override
+//    public boolean compareTo(Set<Searchable> search) {
+//        return false;
+//    }
 }
