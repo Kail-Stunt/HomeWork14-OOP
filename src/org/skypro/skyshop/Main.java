@@ -6,6 +6,7 @@ import org.skypro.skyshop.search.SearchEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -47,9 +48,8 @@ public class Main {
         SearchEngine searchEngine = getSearchEngine();
 
         //Найдём нужную статью
-        searchEngine.search("Большой зонт");
-        searchEngine.search("Спички");
-        searchEngine.search("Носки");
+        ArrayList<String> searchList = new ArrayList<>(Arrays.asList("Большой зонт", "Спички", "Носки","Гриль", "Неизвестно"));
+        searchEngine.search(searchList);
 
 //        Для удобства скроем под комменты работу с исключениями
 //        Обработка исключений
