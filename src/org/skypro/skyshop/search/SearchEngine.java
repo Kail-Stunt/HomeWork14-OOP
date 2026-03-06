@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SearchEngine {
 
-    private static final Set<Searchable> searchables = new HashSet<>();
+    private final Set<Searchable> searchables = new HashSet<>();
 
     public void add(Searchable searchable) {
         searchables.add(searchable);
@@ -12,25 +12,15 @@ public class SearchEngine {
 
     public void search(ArrayList<String> search) {
 
-//        Set<Searchable> result = new TreeSet<>(
-//                Comparator.comparingInt((Searchable s) -> s.searchTerm().length())
-//                        .thenComparing(Searchable::searchTerm).reversed());
-
-        Set<Searchable> result = new TreeSet<>(new Comparator<Searchable>() {
-            @Override
-            public int compare(Searchable s1, Searchable s2) {
-                return Integer.compare(s2.searchTerm().length(), s1.searchTerm().length()) != 0
-                        ? Integer.compare(s2.searchTerm().length(), s1.searchTerm().length())
-                        : s1.searchTerm().compareTo(s2.searchTerm());
-            }
-        });
+        Set<Searchable> result = new TreeSet<>(
+                Comparator.comparingInt((Searchable s) -> s.searchTerm().length())
+                        .thenComparing(Searchable::searchTerm).reversed());
 
         int count = 0;
         for (Searchable s : searchables) {
             for (String articleName : search) {
                 if (s.searchTerm().contains(articleName)) {
                     result.add(s);
-                    System.out.println("Элемент " + s.searchTerm().length() + s);
                     ++count;
                 }
             }
@@ -39,7 +29,7 @@ public class SearchEngine {
         System.out.println("\nНашли " + count + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список:");
 
         for (Searchable s : result) {
-            System.out.println("s = " + s.searchTerm().length() + s);
+            System.out.println(s);
         }
 
 //    public void mostSuitable(String mostFind) throws BestResultNotFoundException {

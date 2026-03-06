@@ -4,7 +4,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.InputMismatchException;
 
-public class DiscountedProduct extends Product implements Comparable<Searchable> {
+public class DiscountedProduct extends Product {
     public int basePrice;
     public int discount;
 
@@ -51,10 +51,5 @@ public class DiscountedProduct extends Product implements Comparable<Searchable>
     public String getStringRepresentation() {
 
         return null;
-    }
-
-    @Override
-    public int compareTo(Searchable o) {
-        return 0;
     }
 }
