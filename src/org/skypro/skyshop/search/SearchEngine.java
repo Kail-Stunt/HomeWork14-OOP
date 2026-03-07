@@ -4,28 +4,33 @@ import java.util.*;
 
 public class SearchEngine {
 
-    private static final Set<Searchable> searchables = new HashSet<>();
+    private final Set<Searchable> searchables = new HashSet<>();
 
     public void add(Searchable searchable) {
         searchables.add(searchable);
     }
 
     public void search(ArrayList<String> search) {
-        Comparator<String> lengthAndOrderComparator = Comparator
-                .comparingInt(String::length).reversed()
-                .thenComparing(Comparator.naturalOrder());
 
-        Set<String> result = new TreeSet<>(lengthAndOrderComparator);
+        Set<Searchable> result = new TreeSet<>(
+                Comparator.comparingInt((Searchable s) -> s.searchTerm().length())
+                        .thenComparing(Searchable::searchTerm).reversed());
+
         int count = 0;
         for (Searchable s : searchables) {
             for (String articleName : search) {
                 if (s.searchTerm().contains(articleName)) {
-                    result.add(s.searchTerm());
+                    result.add(s);
                     ++count;
                 }
             }
         }
-        System.out.println("\nНашли " + count + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список: \n" + result);
+
+        System.out.println("\nНашли " + count + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список:");
+
+        for (Searchable s : result) {
+            System.out.println(s);
+        }
 
 //    public void mostSuitable(String mostFind) throws BestResultNotFoundException {
 //
@@ -58,5 +63,3 @@ public class SearchEngine {
 //    }
     }
 }
-
-

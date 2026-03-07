@@ -3,7 +3,6 @@ package org.skypro.skyshop.product;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.Objects;
-import java.util.Set;
 
 public abstract class Product implements Searchable {
 
@@ -57,9 +56,4 @@ public abstract class Product implements Searchable {
     public int hashCode() {
         return Objects.hashCode(productName);
     }
-
-//    @Override
-//    public boolean compareTo(Set<Searchable> search) {
-//        return false;
-//    }
 }

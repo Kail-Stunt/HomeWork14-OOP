@@ -4,7 +4,10 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Objects;
 import java.util.Set;
 
-public final class Article implements Searchable, Comparable<Searchable> {
+import java.util.Comparator;
+import java.util.Objects;
+
+public final class Article implements Searchable {
     private final String articleName;
     private final String articleContent;
 
@@ -15,7 +18,7 @@ public final class Article implements Searchable, Comparable<Searchable> {
 
     @Override
     public String toString() {
-        return " Название статьи: " + articleName + "\nСодержание статьи: " + articleContent;
+        return "Название статьи: " + articleName + "\nСодержание статьи: " + articleContent;
     }
 
     @Override
@@ -26,6 +29,18 @@ public final class Article implements Searchable, Comparable<Searchable> {
     @Override
     public String contentType() {
         return "ARTICLE";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return Objects.equals(articleName, article.articleName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(articleName);
     }
 
     @Override
