@@ -3,6 +3,7 @@ package org.skypro.skyshop.product;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.InputMismatchException;
+import java.util.Set;
 
 public class SimpleProduct extends Product {
     private int productPrice;
@@ -11,7 +12,7 @@ public class SimpleProduct extends Product {
         super(productName);
         this.productPrice = productPrice;
         if (productPrice <= 0) {
-                throw new IllegalArgumentException("Цена не может быть меньше нуля!");
+            throw new IllegalArgumentException("Цена не может быть меньше нуля!");
         }
     }
 

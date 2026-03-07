@@ -3,6 +3,7 @@ package org.skypro.skyshop.product;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.InputMismatchException;
+import java.util.Set;
 
 public class DiscountedProduct extends Product {
     public int basePrice;
