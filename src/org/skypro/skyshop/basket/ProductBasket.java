@@ -15,39 +15,31 @@ public class ProductBasket {
 
     //Реализуем метод получения общей стоимости корзины: метод ничего не принимает и возвращает целое число.
     public static int basketPrice() {
-        int basketPrice = 0;
-        for (Map.Entry<String, LinkedList<Product>> products : basket.entrySet()) {
-            for (Product p : basket.get(products.getKey())) {
-                int productPrice = products.getValue().element().getProductPrice();
-                basketPrice += productPrice;
-            }
-        }
-        return basketPrice;
+        return basket.values().stream()
+                .filter(list -> !list.isEmpty())
+                .mapToInt(list -> list.element().getProductPrice()).sum();
     }
 
     //Выведем содержимое корзины и её полную стоимость
     public static void basketList() {
         System.out.println("Содержимое корзины:\n");
-        basket.forEach((key, value) -> System.out.println(key + " : " + value));
-        if (!basket.isEmpty()) {
-            System.out.println("Итого: " + basketPrice());
-            System.out.println("Специальных товаров в корзине: " + findSpecial());
-        } else {
-            System.out.println("В корзине пусто!");
-        }
+        basket.forEach((key, value) -> System.out.println((key + " : " + value)));
+        basket.entrySet().stream()
+                .findFirst()
+                .ifPresentOrElse(
+                        entry -> {
+                            System.out.println("Итого: " + basketPrice());
+                            System.out.println("Специальных товаров в корзине: " + findSpecial());
+                        },
+                        () -> System.out.println("В корзине пусто!")
+                );
     }
 
     //Проверим продукт по имени
     public static boolean productCheck(Product product) {
-        boolean isInBasket = false;
-        for (Map.Entry<String, LinkedList<Product>> products : basket.entrySet()) {
-            if (product.getProductName().equals(products.getValue().element().getProductName())) {
-                isInBasket = true;
-            }
-            if (isInBasket) {
-                break;
-            }
-        }
+        boolean isInBasket = basket.values().stream()
+                .flatMap(Collection::stream)
+                .anyMatch(p -> p.getProductName().equals(product.getProductName()));
         System.out.println("Продукт " + product.getProductName() + " в корзине? " + isInBasket);
         return isInBasket;
     }
@@ -59,15 +51,11 @@ public class ProductBasket {
 
     //Находим количество специальных товаров
     public static int findSpecial() {
-        int special = 0;
-        for (Map.Entry<String, LinkedList<Product>> products : basket.entrySet()) {
-            for (Product p : basket.get(products.getKey())) {
-                if (p.isSpecial()) {
-                    ++special;
-                }
-            }
-        }
-        return special;
+        long special = basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
+        return Math.toIntExact(special);
     }
 
     //Удаляем из корзины указанный товар и возвращаем список удалённых продуктов
@@ -75,13 +63,13 @@ public class ProductBasket {
         ArrayList<String> removeProductsList = new ArrayList<>();
         removeProductsList.add(productName);
         basket.keySet().removeIf(productName::equals);
-
-        if (removeProductsList.isEmpty()) {
-            System.out.println("Список пуст:\n" + removeProductsList);
-        } else {
-            System.out.println("Список удалённых продуктов:" + removeProductsList);
-        }
-        return removeProductsList;
+        removeProductsList.stream()
+                .findFirst()
+                .ifPresentOrElse(
+                        removed -> System.out.println("Список удалённых продуктов:" + removeProductsList),
+                        () -> System.out.println("Список пуст:\n" + removeProductsList)
+                );
+       return removeProductsList;
     }
 
     @Override

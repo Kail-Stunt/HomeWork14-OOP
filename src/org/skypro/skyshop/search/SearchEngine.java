@@ -1,6 +1,7 @@
 package org.skypro.skyshop.search;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
 
@@ -16,15 +17,11 @@ public class SearchEngine {
                 Comparator.comparingInt((Searchable s) -> s.searchTerm().length())
                         .thenComparing(Searchable::searchTerm).reversed());
 
-        int count = 0;
-        for (Searchable s : searchables) {
-            for (String articleName : search) {
-                if (s.searchTerm().contains(articleName)) {
-                    result.add(s);
-                    ++count;
-                }
-            }
-        }
+        List<Searchable> found = searchables.stream()
+                .filter(s -> search.stream().anyMatch(articleName -> s.searchTerm().contains(articleName)))
+                .collect(Collectors.toList());
+        result.addAll(found);
+        int count = found.size();
 
         System.out.println("\nНашли " + count + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список:");
 
