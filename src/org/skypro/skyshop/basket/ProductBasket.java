@@ -16,20 +16,24 @@ public class ProductBasket {
     //Реализуем метод получения общей стоимости корзины: метод ничего не принимает и возвращает целое число.
     public static int basketPrice() {
         return basket.values().stream()
-                .filter(list -> !list.isEmpty())
-                .mapToInt(list -> list.element().getProductPrice()).sum();
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getProductPrice)
+                .sum();
     }
 
     //Выведем содержимое корзины и её полную стоимость
     public static void basketList() {
         System.out.println("Содержимое корзины:\n");
-        basket.forEach((key, value) -> System.out.println((key + " : " + value)));
+        basket.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream()
+                        .map(product -> entry.getKey() + " : " + product))
+                .forEach(System.out::println);
         basket.entrySet().stream()
                 .findFirst()
                 .ifPresentOrElse(
                         entry -> {
                             System.out.println("Итого: " + basketPrice());
-                            System.out.println("Специальных товаров в корзине: " + findSpecial());
+                            System.out.println("Специальных товаров в корзине: " + getSpecialCount());
                         },
                         () -> System.out.println("В корзине пусто!")
                 );
@@ -50,12 +54,11 @@ public class ProductBasket {
     }
 
     //Находим количество специальных товаров
-    public static int findSpecial() {
-        long special = basket.values().stream()
+    private static long getSpecialCount() {
+        return basket.values().stream()
                 .flatMap(Collection::stream)
                 .filter(Product::isSpecial)
                 .count();
-        return Math.toIntExact(special);
     }
 
     //Удаляем из корзины указанный товар и возвращаем список удалённых продуктов
