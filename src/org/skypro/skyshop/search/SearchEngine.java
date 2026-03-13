@@ -1,6 +1,7 @@
 package org.skypro.skyshop.search;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
 
@@ -11,26 +12,17 @@ public class SearchEngine {
     }
 
     public void search(ArrayList<String> search) {
-
-        Set<Searchable> result = new TreeSet<>(
-                Comparator.comparingInt((Searchable s) -> s.searchTerm().length())
-                        .thenComparing(Searchable::searchTerm).reversed());
-
-        int count = 0;
-        for (Searchable s : searchables) {
-            for (String articleName : search) {
-                if (s.searchTerm().contains(articleName)) {
-                    result.add(s);
-                    ++count;
-                }
-            }
-        }
-
-        System.out.println("\nНашли " + count + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список:");
-
-        for (Searchable s : result) {
-            System.out.println(s);
-        }
+        Set<Searchable> result = searchables.stream()
+                .filter(s -> search.stream().anyMatch(articleName -> s.searchTerm().contains(articleName)))
+                .collect(Collectors.toCollection(() ->
+                        new TreeSet<>(
+                                Comparator.comparingInt((Searchable s) -> s.searchTerm().length())
+                                        .thenComparing(Searchable::searchTerm)
+                                        .reversed()
+                        )
+                ));
+        System.out.println("\nНашли " + result.size() + " элементов из поиска: \nвыведем отсортированный по длине названия статьи список:");
+        result.forEach(System.out::println);
 
 //    public void mostSuitable(String mostFind) throws BestResultNotFoundException {
 //
